@@ -21,13 +21,34 @@ Ce projet a pour but de :
 
 ## 🧩 Architecture cible
 
+## 🏗️ Architecture du projet
+
+L’architecture déployée sur AKS est simple mais robuste : l’API FastAPI communique avec MySQL en interne, et l’accès externe passe par l’Ingress NGINX. Voici le schéma conceptuel :
+
 ```mermaid
-graph TD
-  A[Client (Postman / Navigateur)] -->|Requête HTTP| B[Ingress Controller]
-  B -->|Routage| C[Service API]
-  C -->|Communication interne| D[Pod API]
-  D -->|Lecture/Écriture| E[(Volume / Base de données)]
+graph LR
+    subgraph External
+        A[Client (navigateur / Postman)]
+    end
+
+    subgraph Ingress
+        B[Ingress NGINX]
+    end
+
+    subgraph Cluster
+        C[Service API (ClusterIP)]
+        D[Pod API (FastAPI)]
+        E[Pod MySQL]
+        F[(PVC / Azure Disk)]
+    end
+
+    A -->|HTTP(S)| B
+    B -->|Routage interne| C
+    C --> D
+    D -->|Connexion MySQL| E
+    E --> F
 ```
+
 ## ⚙️ Ressources déployées
 | Type       | Nom              | Rôle                                          |
 | ---------- | ---------------- | --------------------------------------------- |
