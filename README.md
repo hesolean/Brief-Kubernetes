@@ -28,7 +28,7 @@ L’architecture déployée sur AKS est simple mais robuste : l’API FastAPI co
 ```mermaid
 graph LR
     subgraph External
-        A[Client (navigateur / Postman)]
+        A[Client]
     end
 
     subgraph Ingress
@@ -36,10 +36,10 @@ graph LR
     end
 
     subgraph Cluster
-        C[Service API (ClusterIP)]
-        D[Pod API (FastAPI)]
+        C[Service API ClusterIP]
+        D[Pod API FastAPI]
         E[Pod MySQL]
-        F[(PVC / Azure Disk)]
+        F[(PVC Azure Disk)]
     end
 
     A -->|HTTP(S)| B
