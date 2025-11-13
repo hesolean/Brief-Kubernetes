@@ -6,17 +6,15 @@ metadata:
   annotations:
     appgw.ingress.kubernetes.io/health-probe-path: "/health" # pour dire à Application Gateway comment tester la route health
     appgw.ingress.kubernetes.io/backend-path-prefix: "/"   # pour remplacer /lnd/ par /
-
 spec:
   ingressClassName: azure-application-gateway   # pour communiquer avec ingressControleur azure
   rules:
-  - host: api-test.local
-    http:
+  - http:
       paths:
-      - path: /lnd/
-        pathType: Exact
+      - path: /
+        pathType: Prefix
         backend:
           service:
             name: api-service
             port:
-              number: 8000    # port du service et pas du pod
+              number: 80    # port du service et pas du pod

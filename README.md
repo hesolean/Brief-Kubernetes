@@ -19,8 +19,6 @@ Ce projet a pour but de :
 
 ---
 
-## 🧩 Architecture cible
-
 ## 🏗️ Architecture du projet
 
 L’architecture déployée sur AKS est simple mais robuste : l’API FastAPI communique avec MySQL en interne, et l’accès externe passe par l’Ingress NGINX. Voici le schéma conceptuel :
@@ -39,10 +37,10 @@ graph LR
         C[Service API ClusterIP]
         D[Pod API FastAPI]
         E[Pod MySQL]
-        F[(PVC Azure Disk)]
+        F[PVC Azure Disk]
     end
 
-    A -->|HTTP(S)| B
+    A -->|HTTP| B
     B -->|Routage interne| C
     C --> D
     D -->|Connexion MySQL| E
@@ -91,19 +89,7 @@ kubectl apply -f k8s/
 kubectl get all -n lnd
 ```
 
-### 3️⃣ Exposition de l’API
-``` bash
-minikube tunnel
-# ou
-minikube service list
-
-
-Ensuite, tester avec :
-
-curl http://api-test.local
-```
-
-### 4️⃣ Nettoyage du cluster
+### 3️⃣ Nettoyage du cluster
 ``` bash
 kubectl delete -f k8s/
 minikube stop
@@ -148,9 +134,14 @@ minikube start --driver=docker
 ## 🧩 Points de validation
 
 ✅ Le déploiement se fait via des manifests YAML
+
 ✅ L’API répond via un service interne et un Ingress
+
 ✅ Les configurations sont externalisées (ConfigMap / Secret)
+
 ✅ Le volume persiste les données entre deux redéploiements
+7za
+
 ✅ Le projet est documenté dans ce README
 
 ## 🧭 Pistes d’amélioration

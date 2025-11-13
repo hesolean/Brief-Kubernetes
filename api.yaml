@@ -22,8 +22,6 @@ spec:
         - containerPort: 8000
         # --------------Accès Mysql---------------
         env:
-        - name: MYSQL_HOST
-          value: mysql-service.lnd.svc.cluster.local
         - name: MYSQL_PORT
           value: "3306"
         - name: MYSQL_USER
@@ -36,6 +34,8 @@ spec:
             secretKeyRef:
               name: mysql-secret
               key: mysql-password
+        - name: DB_NAME
+          value: "clients"
         # ----------------- Probes -----------------
 
         # ----------------- Vérifie que le pod est vivant -----------------
@@ -67,5 +67,5 @@ spec:
   selector:
     app: api
   ports:
-  - port: 8000
+  - port: 80
     targetPort: 8000

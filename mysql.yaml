@@ -39,8 +39,6 @@ spec:
             secretKeyRef:
               name: mysql-secret
               key: mysql-root-password
-
-
       volumes:                      # définition du volume réel
       - name: mysql-pv
         persistentVolumeClaim:
