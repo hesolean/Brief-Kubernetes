@@ -1,3 +1,5 @@
+# ------------- Création du pod avec l'image docker associée ------------------
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -50,6 +52,8 @@ spec:
           claimName: mysql-pvc
 
 ---
+
+# ------------ Création du service associé au pod --------------
 
 apiVersion: v1
 kind: Service

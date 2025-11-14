@@ -1,3 +1,5 @@
+# ----------- Création du pod en fonction du code d'origin et des besoins de variables d'environnement ... --------------
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -20,7 +22,8 @@ spec:
         image: sengsathit/brief-api:latest
         ports:
         - containerPort: 8000
-        # --------------Accès Mysql---------------
+        # ---------------Accès Mysql -------------------
+        # --------------bil faut ajouter toutes les variables d'environnement que demande l'API dans l'image docker ---------------
         env:
         - name: MYSQL_PORT
           value: "3306"
@@ -44,6 +47,11 @@ spec:
             configMapKeyRef:
               name: mysql-configmap
               key: database-name
+        - name: MYSQL_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: mysql-configmap
+              key: database-url
         - name: ROOT_PATH
           value: "/lnd"
         # ----------------- Probes -----------------
@@ -65,6 +73,8 @@ spec:
           periodSeconds: 5
 
 ---
+
+# --------------- Service associé au pod --------------
 
 apiVersion: v1
 kind: Service
