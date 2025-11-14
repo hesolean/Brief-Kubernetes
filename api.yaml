@@ -40,9 +40,12 @@ spec:
               name: mysql-secret
               key: mysql-root-password
         - name: MYSQL_DATABASE
-          value: clients
+          valueFrom:
+            configMapKeyRef:
+              name: mysql-configmap
+              key: database-name
         - name: ROOT_PATH
-          value: "lnd"
+          value: "/lnd"
         # ----------------- Probes -----------------
 
         # ----------------- Vérifie que le pod est vivant -----------------
